@@ -1,0 +1,92 @@
+\documentclass[a4paper, 11pt]{report}
+
+% --- Pacchetti Fondamentali ---
+\usepackage[utf8]{inputenc} % Codifica dei caratteri in input
+\usepackage[T1]{fontenc}    % Codifica dei font in output
+\usepackage[italian]{babel} % Regole tipografiche e sillabazione per l'italiano
+\usepackage{geometry}       % Gestione dei margini
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm
+}
+\usepackage{hyperref}       % Rende i riferimenti e le note cliccabili
+\usepackage{xcolor}         % Per la gestione dei colori
+
+% --- Definizione dei Comandi Personalizzati ---
+
+% Comando \lezione{Data}{Argomento}
+\newcommand{\lezione}[2]{
+    \vspace{2em} 
+    \noindent\textbf{\Large #1 \hfill \textcolor{darkgray}{#2}}
+    \vspace{0.5em}
+    \hrule
+    \vspace{1.5em} 
+}
+
+% Comando \definizione{Parola}{Spiegazione}
+\newcommand{\definizione}[2]{%
+    \textbf{#1}\footnote{\textbf{#1:} #2}%
+}
+
+% --- Dati del Documento ---
+\title{\textbf{Lezioni Algoritmi e strutture Dati}}
+\author{Alberto Bernasconi}
+\date{a.a 25/26} 
+
+\begin{document}
+
+\maketitle
+
+
+
+\chapter{Introduzione}
+
+introduzione al Corso di Algoritmi e strutture Dati. 
+
+\lezione{\href{https://drive.google.com/file/d/19lwPIueX12PzabGaNMsNbikl1XXXilLK/view?usp=drive_link}{23 Febbraio 2026}}{Introduzione, analisi di due esempi di problemi da risolvere}
+
+\section{Il problema della celebrita'}
+Struttura di un problema:
+\begin{itemize}
+    \item Partiamo da una \textbf{definizione} formale:
+        \textit{Una celebrità e una persona che non conosce nessuo ma è conosciuta da tutti}, astrazione di simmetria estrema tra le persone conosciute dalla celebrità e quelle che ella stessa conosce.
+    Assunzione, che un a celebrita non conosce nessuno
+    \item \definizione{Problema}{Situazione da risolvere con maggiore efficienza e rapidità possibile}:
+        \textit{Dato un insieme di n persone, determinare se questo contiene una celebrità (tramite domande del tipo "X conosce Y")}; Pensiamo ad una campagna di marketing, la scelta di un testimonial in una pubblicità e basata sulla popolarità dell'individuo, si incarica un'agenzia di trovare questa persona.
+    \item \definizione{Soluzione Naive}{La soluzione più semplice e penabile ma quasi mai la più efficiente}:
+        \textit{Si esaminano le persone una ad una e per ceiascuna di questa si verifica se è una celebrita (tramite 2(n-1) domane)}
+        ipotizziamo che qual'ora vi sia una celebrità sia unica, ma quante domande devo fare per comprendere se una persona è la nostra eletta.
+\end{itemize}
+Il numero di domande che devo fare sara:
+\[
+2\cdot n (n-1)
+\]
+Se supponiamo che $n$ sia un numero abbastanza grande, ma nemmeno troppo, se colui che pagato per trovare questa persona anche prendendo una minima cifra per ogni intervista, viene a raggiungere dato il numero di persone un costo elevato rispetto al natura del problema.
+\\
+\textbf{Come possiamo fare meglio ?}\\
+\begin{itemize}
+    \item Si seleziona una coppia di persone a caso (X,Y) e si pone la domanda "X conosce Y?"  se la risposta è affermativa X non è una celebritàè altrimenti Y non è una celebrità.
+    \item Si ripete questo passo precedente su un insieme di $n-1$ persone (con una domanda si elimina una persona) 
+    \item Dopo $n-1$ passi si verifica l'unica persona rimasta sia una celebrita (con $2n-2$ domande)
+\end{itemize}
+Gia in questo modo riusciamo a ridurre significativamente il costo della ricerca rispetto alla \textbf{Soluzione naive}.
+
+\textbf{La soluzione:} viene trovata tramite la soluzione di una particolare \definizione{\textcolor{blue}{\textbf{equazione di ricorrenza}}}{equazione dove un valore dipende dalla soluzione dello stesso problema ma in una dimensione più piccola}
+\[
+c_n = c_{n-1} +1, \qquad c_1 = n-1 \quad \Rightarrow \quad c_n = 2n-2
+\]
+Quale era il nostro \textbf{Obbietivo} iniziale, raggiungere l'\textbf{efficienza} della soluzione.
+
+\subsection{Il problema del missionario chirurgo}
+
+\subsection{Fair division 53.00, il problema del comunista}
+\lezione{\href{https://drive.google.com/file/d/1PNNQ-7VEMkmCwfNqaEoWHJ2FpO0sFJRL/view?usp=drive_link}{25 Febbraio 2026}}{}
+
+
+\lezione{26 Febbraio 2026}{}
+
+
+
+\end{document}
