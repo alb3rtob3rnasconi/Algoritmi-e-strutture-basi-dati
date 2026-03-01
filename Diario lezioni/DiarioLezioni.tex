@@ -13,6 +13,7 @@
 }
 \usepackage{hyperref}       % Rende i riferimenti e le note cliccabili
 \usepackage{xcolor}         % Per la gestione dei colori
+\usepackage{amsmath}        % Per ambienti matematici come equation*
 
 % --- Definizione dei Comandi Personalizzati ---
 
@@ -80,12 +81,57 @@ c_n = c_{n-1} +1, \qquad c_1 = n-1 \quad \Rightarrow \quad c_n = 2n-2
 Quale era il nostro \textbf{Obbietivo} iniziale, raggiungere l'\textbf{efficienza} della soluzione.
 
 \subsection{Il problema del missionario chirurgo}
+    \textbf{Struttura di un problema:}
+    \begin{itemize}
+        \item \textbf{Partiamo da una definizione formale:} Un missionario chirurgo opera in missioni con scarse risorse e deve ottimizzarne l'uso. Per garantire la sicurezza ed evitare infezioni, il chirurgo non deve mai venire a contatto diretto con i tessuti del paziente, utilizzando guanti in lattice sterili.
+        \item \textbf{Problema:} Avendo a disposizione un numero limitato di risorse, ovvero $n$ paia di guanti, quanti interventi sicuri è possibile eseguire? A differenza del problema della celebrità (dove si volevano minimizzare le risorse), qui l'approccio è duale: le risorse sono fissate in partenza e l'obiettivo è massimizzare il numero di interventi.
+        \item \textbf{Soluzione Naive\footnote{Soluzione Naive: La soluzione più immediata ma meno efficiente.}:} Si esegue un intervento consumando un singolo paio di guanti alla volta, per un totale di $n$ interventi. Questo approccio genera uno spreco, poiché per ogni intervento la mano del chirurgo contamina una nuova superficie interna dei guanti.
+        \item \textbf{Limite teorico:} Fissate $n$ paia di guanti, abbiamo a disposizione un totale di $2n$ superfici (contando sia l'interno che l'esterno di ciascun guanto). Poiché almeno una superficie deve necessariamente entrare in contatto con la mano del chirurgo (diventando infetta), rimangono al massimo $2n - 1$ superfici sterili. Di conseguenza, il numero massimo teorico di interventi possibili è $2n - 1$.
+        \item \textbf{Miglioramento (Colpo di genio):} Per superare la soluzione naive, si sfrutta la possibilità di infilare i guanti uno sopra l'altro.
+        \begin{itemize}
+            \item \textit{Fase di andata}: Si infilano tutte le $n$ paia di guanti una sull'altra ed si esegue il primo intervento. Finito l'intervento, si sfila il guanto più esterno, lo si rovescia (mantenendo all'esterno una superficie sterile) e lo si mette da parte. Si eseguono così interventi a scalare fino a rimanere con un solo paio di guanti infilato, completando $n$ interventi in questa fase.
+            \item \textit{Fase di ritorno}: Arrivati a 1, si ricomincia a infilare uno alla volta i guanti precedentemente sfilati e rovesciati. La superficie interna (contaminata) del guanto recuperato andrà a contatto con la superficie esterna (anch'essa contaminata) del guanto già sulle mani, lasciando esposta la superficie esterna sterile. Questo permette di eseguire altri $n-1$ interventi.
+        \end{itemize}
+        \item \textbf{La soluzione:} Viene espressa tramite una particolare equazione di ricorrenza che descrive gli interventi effettuati nella fase di andata e ritorno:
+        \begin{equation*}
+            C_n = C_{n-1} + 2, \quad C_1 = 1 \implies C_n = 2n - 1
+        \end{equation*}
+        Con questo schema ottimalizziamo le risorse raggiungendo esattamente il limite teorico di $2n - 1$ interventi, dimostrando che nessun'altra soluzione può fare di meglio.
+    \end{itemize}
 
 \subsection{Fair division 53.00, il problema del comunista}
+    \textbf{Struttura di un problema:}
+    \begin{itemize}
+        \item \textbf{Partiamo da una definizione formale:} L'equadivisione (Fair division) consiste nel trovare uno schema per spartire un insieme di risorse (oggetti o beni) con un certo valore complessivo $R$ tra $K$ individui (o entità) in maniera equa.
+        \item \textbf{Vincoli del problema:} Un algoritmo per la ripartizione deve soddisfare rigorosamente tre regole fondamentali:
+        \begin{enumerate}
+            \item \textbf{Nessuna coalizione:} Deve essere matematicamente impossibile che un gruppo si metta d'accordo per danneggiare un altro individuo.
+            \item \textbf{Responsabilità personale:} Se un individuo riceve meno della sua quota spettante (ovvero una frazione minore di $R/K$), la responsabilità deve essere esclusivamente sua, frutto di un suo errore di scelta o divisione.
+            \item \textbf{Assenza di invidia (\textit{Envy-free}):} Se a un individuo viene assegnato un valore che ritiene almeno pari al dovuto, egli non ha diritto di invidiare ciò che è stato assegnato agli altri.
+        \end{enumerate}
+        \item \textbf{Soluzione per $K=2$:} Si adotta il classico metodo "uno divide, l'altro sceglie". L'individuo A divide le risorse in due parti, cercando di farle equivalenti. L'individuo B sceglie per primo. Se A sbaglia a dividere e subisce un danno (rimanendo con la parte minore), la colpa è sua; se B prende la parte maggiore non c'è invidia, e non ci sono coalizioni.
+        \item \textbf{Soluzione per $K=3$:} Il processo richiede un algoritmo leggermente più articolato:
+        \begin{itemize}
+            \item L'individuo A divide le risorse in tre insiemi disgiunti $S_1, S_2, S_3$, cercando di fare in modo che ciascuno valga $R/3$.
+            \item L'individuo B esamina le parti e indica l'insieme $S_i$ che reputa di minor valore (quindi con un valore stimato $\le R/3$).
+            \item L'individuo C esamina a sua volta l'insieme $S_i$ indicato da B:
+            \begin{itemize}
+                \item Se C concorda che $S_i \le R/3$, l'insieme $S_i$ viene assegnato ad A. Ciò che rimane viene riunito e diviso tra B e C applicando lo schema per $K=2$.
+                \item Se C ritiene invece che $S_i > R/3$, allora l'insieme $S_i$ viene assegnato a C (che riceve più di un terzo e non può lamentarsi). Ciò che rimane viene spartito tra A e B.
+            \end{itemize}
+        \end{itemize}
+        \item \textbf{Varianti e compensazioni:}
+        \begin{itemize}
+            \item \textit{Beni continui (Esempio della birra in pizzeria):} Per dividere una quantità continua (come 5 litri di birra) tra $K$ persone, il primo versa in un boccale la dose che ritiene corretta. Il boccale gira: se chi lo riceve ritiene la dose eccessiva, ne rovescia un po' e lo passa al compagno successivo. Il boccale va all'ultima persona che ha ridotto la quantità (o al primo se nessuno è intervenuto). Chi lo ottiene è soddisfatto, e gli altri non possono lamentarsi perché hanno avuto il loro turno per intervenire.
+            \item \textit{Beni discreti indivisibili:} Qualora gli oggetti non possano essere divisi in parti di egual valore (es. un tablet e un piccolo gadget), si fa ricorso a tecniche di compensazione integrando il valore da spartire con del denaro.
+        \end{itemize}
+        \item \textbf{Conclusione e scopo introduttivo:} I problemi della celebrità, del missionario chirurgo e della Fair division servono a illustrare il filo conduttore dell'informatica algoritmica: \textbf{partire sempre da una definizione formale, progettare uno schema corretto (algoritmo) per risolverlo e prestare un'attenzione ossessiva all'efficienza e all'uso delle risorse}. Un metodo teoricamente corretto, ma che richiede risorse inaccettabili, è nella pratica inutile tanto quanto un metodo sbagliato.
+    \end{itemize}
+
 \lezione{\href{https://drive.google.com/file/d/1PNNQ-7VEMkmCwfNqaEoWHJ2FpO0sFJRL/view?usp=drive_link}{25 Febbraio 2026}}{}
 
 
-\lezione{26 Febbraio 2026}{}
+\lezione{\href{https://drive.google.com/file/d/1vagjBGS1jUtCbsZ96_hmvflkbg6rkSI0/view?usp=drive_link}{26 Febbraio 2026}}{}
 
 
 
