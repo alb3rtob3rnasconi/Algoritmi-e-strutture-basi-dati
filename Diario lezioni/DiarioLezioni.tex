@@ -128,11 +128,118 @@ Quale era il nostro \textbf{Obbietivo} iniziale, raggiungere l'\textbf{efficienz
         \item \textbf{Conclusione e scopo introduttivo:} I problemi della celebrità, del missionario chirurgo e della Fair division servono a illustrare il filo conduttore dell'informatica algoritmica: \textbf{partire sempre da una definizione formale, progettare uno schema corretto (algoritmo) per risolverlo e prestare un'attenzione ossessiva all'efficienza e all'uso delle risorse}. Un metodo teoricamente corretto, ma che richiede risorse inaccettabili, è nella pratica inutile tanto quanto un metodo sbagliato.
     \end{itemize}
 
-\lezione{\href{https://drive.google.com/file/d/1PNNQ-7VEMkmCwfNqaEoWHJ2FpO0sFJRL/view?usp=drive_link}{25 Febbraio 2026}}{}
+\lezione{\href{https://drive.google.com/file/d/1PNNQ-7VEMkmCwfNqaEoWHJ2FpO0sFJRL/view?usp=drive_link}{24 Febbraio 2026}}{Introduzione alla Complessità Algoritmica}
+
+\subsubsection*{1.2.1 Problemi, Funzioni e Algoritmi}
+\textbf{Struttura e definizioni:}
+\begin{itemize}
+    \item \textbf{Problema formale:} Un problema associa un insieme di istanze di ingresso a un insieme di soluzioni, rappresentabile matematicamente come una funzione $f(x)$. Ad esempio, nel problema della primalità, l'input è un numero naturale e l'output è un valore booleano (1 se primo, 0 se composto).
+    \item \textbf{Algoritmo vs Programma:} L'algoritmo è il metodo astratto per risolvere il problema (associabile a una funzione parziale che prevede il simbolo di indefinito $\bot$ per i cicli infiniti), mentre il programma è la sua implementazione pratica in un dato linguaggio per uno specifico esecutore hardware.
+    \item \textbf{Correttezza:} Un algoritmo è considerato corretto se il suo dominio di input coincide con le istanze del problema, il suo output coincide con le soluzioni, e se la funzione calcolata dall'algoritmo è esattamente uguale a quella del problema per ogni input. Nell'analisi algoritmica di base ci si concentra esclusivamente su algoritmi corretti.
+\end{itemize}
+
+\subsubsection*{1.2.2 Modello di calcolo e Dimensione dell'Input}
+\textbf{Valutazione delle risorse:}
+\begin{itemize}
+    \item \textbf{Indipendenza dall'hardware:} Per misurare l'efficienza non si utilizza il tempo cronologico (secondi), poiché questo dipenderebbe dalla velocità del processore. La complessità viene valutata contando il numero di istruzioni elementari eseguite (complessità di tempo) e le celle di memoria occupate (complessità di spazio).
+    \item \textbf{Dimensione del dato ($n$):} La complessità dipende strettamente dalla grandezza dell'input, definita attraverso una "funzione peso" ($W$). Questa può rappresentare il numero di cifre per un intero, la lunghezza di un vettore di dati, o l'ordine di una matrice.
+\end{itemize}
+
+\subsubsection*{1.2.3 Le tre Analisi di Complessità}
+\textbf{Gestire la variabilità delle istanze:}
+A parità di dimensione $n$, non tutte le istanze richiedono lo stesso numero di istruzioni. Si definiscono quindi tre tipi di analisi:
+\begin{itemize}
+    \item \textbf{Caso Peggiore (\textit{Worst-case}):} Valuta il costo massimo tra tutte le istanze di dimensione $n$ (associato all'utente "sfortunato", metaforicamente Paperino). È fondamentale per i sistemi critici (es. controllo di centrali nucleari), dove le tempistiche di sicurezza devono essere garantite in ogni situazione.
+    \item \textbf{Caso Migliore (\textit{Best-case}):} Valuta il costo minimo tra tutte le istanze di dimensione $n$ (associato alla "fortuna", es. Gastone) [18, 22]. Un esempio è l'ordinamento di un vettore che risulta essere già ordinato in partenza [23, 24].
+    \item \textbf{Caso Medio (\textit{Average-case}):} Esprime il consumo atteso calcolando una media pesata basata sulle probabilità di ogni singola istanza [25, 26]. È il metro di giudizio principale per i sistemi di transazioni (es. sportelli bancomat), che devono garantire buone prestazioni per la maggior parte del tempo [27-29].
+    \begin{itemize}
+        \item \textit{Raggruppamento per costo:} La formula del caso medio può essere semplificata raccogliendo a fattor comune le istanze che hanno lo stesso costo $K$ [30-32].
+        \item \textit{Ipotesi di equiprobabilità:} Se non si conosce la distribuzione reale dei dati, si assume che tutte le istanze siano equiprobabili. In questo caso, la probabilità diventa il rapporto $\frac{\sigma_{n,K}}{|I_n|}$, dove $\sigma_{n,K}$ è il numero di istanze di dimensione $n$ con costo $K$, e $|I_n|$ è il numero totale di istanze [33-36].
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{1.2.4 Impatto della Tecnologia (Hardware vs Software)}
+\textbf{L'importanza di un buon algoritmo:}
+Migliorare l'hardware non elimina la necessità di algoritmi efficienti. Ipotizzando l'arrivo di una macchina $10$ volte più veloce [37-39]:
+\begin{itemize}
+    \item Con un \textbf{algoritmo lineare ($O(n)$)}, la dimensione massima del problema risolvibile cresce dello stesso fattore (10 volte più grande) [39].
+    \item Con un \textbf{algoritmo quadratico ($O(n^2)$)}, la dimensione massima cresce proporzionalmente alla $\sqrt{10}$ (circa 3,16 volte) [40].
+    \item Con un \textbf{algoritmo esponenziale ($O(2^n)$)}, una macchina 10 volte più veloce permette di aumentare la dimensione del problema solo dell'addendo $\log_2(10) \approx 3,32$ [40, 41].
+\end{itemize}
+Ciò dimostra che algoritmi inefficaci (esponenziali) vanificano i progressi tecnologici dell'hardware. Per sfruttare la potenza dei nuovi computer, è essenziale progettare algoritmi con complessità polinomiale [42].
 
 
-\lezione{\href{https://drive.google.com/file/d/1vagjBGS1jUtCbsZ96_hmvflkbg6rkSI0/view?usp=drive_link}{26 Febbraio 2026}}{}
+\lezione{\href{https://drive.google.com/file/d/1vagjBGS1jUtCbsZ96_hmvflkbg6rkSI0/view?usp=drive_link}{26 Febbraio 2026}}{Le Notazioni Asintotiche e il Modello RAM}
 
+\subsubsection*{1.3.1 Introduzione alle Notazioni Asintotiche}
+\textbf{Scopo e definizioni:}
+\begin{itemize}
+    \item \textbf{L'obiettivo:} Calcolare in modo esatto il numero di istruzioni eseguite da un algoritmo è un compito arduo, perciò ci si accontenta di comprenderne l'andamento asintotico, ovvero come crescono le risorse richieste al crescere della dimensione dell'input $n$. Questo permette di semplificare i calcoli sacrificando l'estrema precisione a favore dell'ordine di grandezza.
+    \item \textbf{O grande ($O$ - Limite superiore):} Una funzione $f(n)$ è $O(g(n))$ se esistono un intero $n_0 \ge 0$ e una costante positiva $c > 0$ tali che $f(n) \le c \cdot g(n)$ per ogni $n \ge n_0$. Intuitivamente, significa che la funzione $f$ è dominata superiormente da $g$ da un certo punto in poi. Questa notazione è ideale per descrivere la complessità nel \textbf{caso peggiore}, poiché indica il limite massimo di crescita. Le costanti moltiplicative non vengono catturate dalla notazione, quindi scrivere $O(n)$ o $O(10n)$ è equivalente.
+    \item \textbf{Omega grande ($\Omega$ - Limite inferiore):} È la notazione simmetrica a $O$ grande. Si dice che $f(n)$ è $\Omega(g(n))$ se esistono $n_0$ e una costante $c > 0$ tali che $f(n) \ge c \cdot g(n)$ per ogni $n \ge n_0$. In questo caso, è la funzione $f$ a dominare $g$ e a stare sopra il suo grafico.
+    \item \textbf{Theta grande ($\Theta$ - Stesso ordine di grandezza):} Una funzione $f(n)$ è $\Theta(g(n))$ se è contemporaneamente $O(g(n))$ e $\Omega(g(n))$. In formule, significa che $f(n)$ è compresa tra $d \cdot g(n)$ e $c \cdot g(n)$ per due costanti $c, d > 0$ da un certo $n_0$ in poi. Indica che due funzioni crescono con lo stesso tasso, trascurando i coefficienti moltiplicativi e i termini di grado inferiore.
+    \item \textbf{Asintotico a ($\sim$ - Uguaglianza asintotica):} Si scrive $f(n) \sim g(n)$ quando il limite del rapporto $\lim_{n \to \infty} \frac{f(n)}{g(n)}$ è uguale a 1. È una notazione molto più precisa di $\Theta$, poiché garantisce che le due funzioni abbiano non solo lo stesso ordine di grandezza, ma anche lo stesso identico coefficiente moltiplicativo.
+    \item \textbf{O piccolo ($o$ - Funzione trascurabile):} Si dice che $f(n)$ è $o(g(n))$ se il limite del rapporto $\lim_{n \to \infty} \frac{f(n)}{g(n)}$ è uguale a 0. Questo denota che il numeratore $f(n)$ cresce in modo così lento rispetto a $g(n)$ da diventare trascurabile al crescere di $n$.
+\end{itemize}
+
+\subsubsection*{1.3.2 Proprietà e Regole di Calcolo}
+\textbf{Semplificazione dell'analisi algoritmica:}
+\begin{itemize}
+    \item \textbf{Relazioni di equivalenza:} Le notazioni $\Theta$ e $\sim$ soddisfano le proprietà riflessiva, simmetrica e transitiva, generando relazioni di equivalenza che partizionano l'infinito mondo delle funzioni in classi di equivalenza ben definite.
+    \item \textbf{Costanti e Somma:} Se $f(n) = O(g(n))$, allora anche $c \cdot f(n) = O(g(n))$ per qualunque costante $c$. La somma di due funzioni $O(g_1) + O(g_2)$ produce una complessità pari a $O(g_1 + g_2)$, che può essere ulteriormente semplificata mantenendo unicamente il termine con la crescita asintotica maggiore. Questa proprietà è fondamentale: analizzando un software con molteplici procedure, ci si può concentrare esclusivamente sul frammento di codice più costoso, buttando via i termini inferiori.
+    \item \textbf{Prodotto e Differenza:} Il prodotto $O(g_1) \cdot O(g_2)$ risulta in $O(g_1 \cdot g_2)$. Al contrario, tali regole \textbf{non} si applicano alla differenza: in generale, la differenza tra due $O$ non coincide con l'O della loro differenza, un fatto facilmente dimostrabile tramite controesempi.
+\end{itemize}
+
+\subsubsection*{1.3.3 Il Modello di Calcolo RAM (Random Access Machine)}
+\textbf{Caratteristiche dell'esecutore astratto:}
+\begin{itemize}
+    \item \textbf{Definizione e scopo:} Per studiare formalmente gli algoritmi e calcolarne la complessità in modo univoco, serve un modello di esecutore astratto semplice e pulito, ovvero la Macchina RAM (Random Access Machine). Il termine "Random Access" indica che il tempo di accesso per qualsiasi informazione in memoria è costante e non varia in base alla posizione fisica dell'indirizzo.
+    \item \textbf{Struttura Hardware semplificata:}
+    \begin{itemize}
+        \item \textbf{Memoria Dati (RAM):} Consiste in una sequenza infinita di registri numerati a partire da zero ($R_0, R_1, R_2, \dots$). L'assunzione che i registri siano infiniti ed in grado di contenere interi arbitrariamente grandi serve per slegare il modello dai vincoli tecnologici e fisici dell'hardware reale.
+        \item \textbf{Memoria Programma (ROM):} Le istruzioni del programma sono caricate in una memoria separata di sola lettura, numerate in progressione.
+        \item \textbf{Program Counter (LC):} È il registro "Location Counter", che conserva l'etichetta (l'indirizzo intero) dell'istruzione corrente che la macchina deve eseguire.
+        \item \textbf{I/O (Nastri):} La comunicazione della macchina avviene mediante due nastri: un nastro di input (sola lettura, dove si precaricano i dati) e un nastro di output (sola scrittura per i risultati). Entrambi i nastri vengono percorsi da testine che si muovono esclusivamente in un'unica direzione, da sinistra verso destra. Ogni cella di questi nastri ospita un singolo numero intero.
+        \item \textbf{Accumulatore e ALU:} Tra le memorie, il registro zero ($R_0$) assume lo speciale ruolo di Accumulatore, mentre la ALU funge da circuito dedicato a svolgere e risolvere le classiche operazioni aritmetiche e logiche previste dal set di istruzioni.
+    \end{itemize}
+    \item \textbf{Set di istruzioni e Costo:} Il modello possiede pochissime istruzioni basilari: I/O, operazioni aritmetiche, accesso in memoria e salti (jump). Il costo spaziale è determinato dai registri allocati, mentre quello temporale dal numero di istruzioni calcolate. Tuttavia, dovendo la macchina poter ospitare numeri indefinitamente immensi, a volte non basta pesare ogni operazione come "1" e diventa necessario ricorrere al "criterio di costo logaritmico", basato sull'effettiva lunghezza dell'intero da elaborare.
+\end{itemize}
+
+
+
+\lezione{02 Marzo 2026}{Modello Ram}
+
+Un programma è una struttura finita di istruzioni, la sua etichetta sara contenuto nel registro e che prima o poi dobra essere eseguita.
+\begin{itemize}
+    \item é una sequenza finita di istruzioni
+    \item ogni istruzione ha un etichetta (l'indirizzo contenuto in \textit{lc})
+    \item ogni istruzione è una coppia (\textcolor{red}{opcode, indirizzo})
+    \item ogni indirizzo può essere un operando o un'etichetta 
+\end{itemize}
+\textbf{Vedi slide tipologia,Opcode, Indirizzo per esempi tabella da copiare}
+
+\subsection{Etichette}
+\begin{itemize}
+    \item sono associate solo ai comandi di salto;
+    \item indicano a quale istruzione viene pasato il controllo.
+\end{itemize}
+
+Esempio:
+\textbf{minuto 14}
+\begin{center}
+    \begin{verbatim}
+        1  READ  0 
+        2  ADD  =1
+            :
+            :
+        K  JUMP  2
+    \end{verbatim}
+\end{center}
+
+Un operando può assumere tre forme diverse: 
+\textbf{Vedi slide con appunti minuto 18}
+
+\subsection{Stato della macchina}
 
 
 \end{document}
